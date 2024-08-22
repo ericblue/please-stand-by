@@ -6,6 +6,8 @@ Hey, remember when TVs actually went "off the air" and stopped broadcasting? If 
 
 ![standby.png](standby.png)
 
+Demo URL: https://eric-blue.com/please-stand-by/
+
 ### A Brief History of the TV Test Signal
 
 The TV test pattern, also known as the test card, has a fascinating history. It was introduced in the early days of television as a way for engineers and technicians to calibrate the equipment and ensure the broadcast signal was being transmitted correctly. The most iconic test pattern in the United States was the RCA Indian Head Test Pattern, introduced in 1939. This pattern featured a Native American chief in a headdress, surrounded by geometric shapes, circles, and lines used to calibrate the television's display.
