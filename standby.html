@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Please Stand By Test Pattern</title>
+    <style>
+              body, html {
+                  margin: 0;
+                  padding: 0;
+                  height: 100%;
+                  width: 100%;
+                  background-color: #000;
+                  overflow: hidden;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-family: Arial, sans-serif;
+              }
+
+              .test-pattern {
+                  position: relative;
+                  width: 90%;
+                  max-width: 1200px;
+                  height: auto;
+                  aspect-ratio: 4 / 3;
+                  display: grid;
+                  grid-template-rows: 4fr 1fr;
+                  background-color: black;
+              }
+
+              .main-bars {
+                  display: grid;
+                  grid-template-columns: repeat(6, 1fr);
+                  height: 100%;
+              }
+
+              .sub-bars {
+                  display: grid;
+                  grid-template-columns: repeat(7, 1fr);
+                  height: 100%;
+              }
+
+              .color-bar {
+                  height: 100%;
+              }
+
+              .main-bars .color-bar:nth-child(1) { background-color: #FFFF00; }
+              .main-bars .color-bar:nth-child(2) { background-color: #00FF00; }
+              .main-bars .color-bar:nth-child(3) { background-color: #00FFFF; }
+              .main-bars .color-bar:nth-child(4) { background-color: #FF00FF; }
+              .main-bars .color-bar:nth-child(5) { background-color: #FF0000; }
+              .main-bars .color-bar:nth-child(6) { background-color: #0000FF; }
+
+              .sub-bars .color-bar:nth-child(1) { background-color: #000080; }
+              .sub-bars .color-bar:nth-child(2) { background-color: #0000FF; }
+              .sub-bars .color-bar:nth-child(3) { background-color: #800080; }
+              .sub-bars .color-bar:nth-child(4) { background-color: #FF00FF; }
+              .sub-bars .color-bar:nth-child(5) { background-color: #808080; }
+              .sub-bars .color-bar:nth-child(6) { background-color: #FFFFFF; }
+              .sub-bars .color-bar:nth-child(7) { background-color: #000000; }
+
+              .text {
+                  position: absolute;
+                  top: 50%;
+                  left: 50%;
+                  transform: translate(-50%, -50%);
+                  background-color: rgba(0, 0, 0, 0.8);
+                  padding: 20px 40px;
+                  color: white;
+                  font-size: 4em;
+                  text-transform: uppercase;
+                  white-space: nowrap;
+                  animation: flickerText 2s infinite alternate;
+              }
+
+              @keyframes flickerText {
+                  0% { opacity: 1; }
+                  50% { opacity: 0.7; }
+                  100% { opacity: 1; }
+              }
+
+              .scanlines {
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  width: 100%;
+                  height: 100%;
+                  background-image: linear-gradient(transparent 50%, rgba(255, 255, 255, 0.05) 50%);
+                  background-size: 100% 4px;
+                  pointer-events: none;
+                  animation: scan 1s linear infinite;
+              }
+
+              @keyframes scan {
+                  0% { background-position: 0 0; }
+                  100% { background-position: 0 4px; }
+              }
+
+              .audio-menu {
+                  position: absolute;
+                  bottom: 20px;
+                  left: 50%;
+                  transform: translateX(-50%);
+                  background-color: rgba(0, 0, 0, 0.8);
+                  color: white;
+                  padding: 10px;
+                  font-size: 1.2em;
+                  border-radius: 5px;
+              }
+
+              .audio-menu select {
+                  font-size: 1em;
+                  padding: 5px;
+              }
+
+              .hint {
+          font-size: 0.8em; /* Smaller text */
+          color: rgba(255, 255, 255, 0.6); /* Slightly transparent white */
+          margin-top: 5px; /* Small margin at the top */
+          text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="test-pattern">
+      <div class="main-bars">
+        <div class="color-bar"></div>
+        <div class="color-bar"></div>
+        <div class="color-bar"></div>
+        <div class="color-bar"></div>
+        <div class="color-bar"></div>
+        <div class="color-bar"></div>
+      </div>
+      <div class="sub-bars">
+        <div class="color-bar"></div>
+        <div class="color-bar"></div>
+        <div class="color-bar"></div>
+        <div class="color-bar"></div>
+        <div class="color-bar"></div>
+        <div class="color-bar"></div>
+        <div class="color-bar"></div>
+      </div>
+      <div class="text">Please Stand By</div>
+    </div>
+    <div class="scanlines"></div>
+    <div class="audio-menu" id="audio-menu">
+      <label for="audio-select">Choose Sound:</label>
+      <select id="audio-select">
+        <option value="silence">Silence</option>
+        <option value="tone">Continuous Tone</option>
+        <option value="white-noise">White Noise</option>
+        <option value="anthem">National Anthem</option>
+      </select>
+      <div class="hint">Press '/' to hide this menu</div>
+      <!-- Hint text -->
+    </div>
+
+    <!-- Audio Elements -->
+    <audio id="tone" loop>
+      <source src="tone.mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+    <audio id="white-noise" loop>
+      <source src="white-noise.mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+    <audio id="anthem" loop>
+      <source src="anthem.mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+
+    <script>
+      const audioSelect = document.getElementById('audio-select');
+      const audioMenu = document.getElementById('audio-menu');
+      const toneAudio = document.getElementById('tone');
+      const whiteNoiseAudio = document.getElementById('white-noise');
+      const anthemAudio = document.getElementById('anthem');
+      let currentAudio = null;
+
+      function stopAllAudio() {
+          toneAudio.pause();
+          toneAudio.currentTime = 0;
+          whiteNoiseAudio.pause();
+          whiteNoiseAudio.currentTime = 0;
+          anthemAudio.pause();
+          anthemAudio.currentTime = 0;
+      }
+
+      audioSelect.addEventListener('change', function() {
+          stopAllAudio();
+          switch (this.value) {
+              case 'tone':
+                  toneAudio.play();
+                  currentAudio = toneAudio;
+                  break;
+              case 'white-noise':
+                  whiteNoiseAudio.play();
+                  currentAudio = whiteNoiseAudio;
+                  break;
+              case 'silence':
+                  currentAudio = null;
+                  break;
+              case 'anthem':
+                  anthemAudio.play();
+                  currentAudio = anthemAudio;
+                  break;
+          }
+      });
+
+      // Play no sound by default
+      audioSelect.value = 'silence';
+
+
+      // Toggle menu visibility with the / key
+      document.addEventListener('keydown', function(event) {
+          if (event.key === '/') {
+              audioMenu.style.display = audioMenu.style.display === 'none' ? 'block' : 'none';
+          }
+      });
+    </script>
+  </body>
+</html>
